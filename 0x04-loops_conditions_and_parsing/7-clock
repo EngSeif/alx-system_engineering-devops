@@ -10,10 +10,17 @@ while [ $hour -lt 13 ];
 do
     if [ $min -eq 60 ]
     then
-        hour+=1
+        (( hour++ ))
+        if [ $hour -eq 13 ]
+        then
+            break
+        fi
         echo "Hour: $hour"
         min=1
     fi
-    echo "$min"
-    (( min++ ))
+    if [ $hour -ne 13 ]
+    then
+        echo "$min"
+        (( min++ ))
+    fi
 done
