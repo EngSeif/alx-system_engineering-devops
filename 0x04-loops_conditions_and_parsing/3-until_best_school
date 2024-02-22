@@ -3,7 +3,7 @@
 
 n=1
 
-until [ $n -lt 11 ];
+until [ $n -eq 11 ];
 do
     echo "Best School"
     (( n++ ))
