@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# displays its own PID]
+# shellcheck disable=SC2009
+# a : Displays All Processes For All Users
+# u : Add More Info As : CPU And Memory Usage
+# x : Include Processes Without TTY
+# f : Show Processes in Hierarchy Format
+ps auxf | grep "bash"
