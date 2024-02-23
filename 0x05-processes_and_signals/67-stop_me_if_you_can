@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Descirption Of Process :
+# ---------------------------------------------
+# - displays To infinity and beyond indefinitely.
+# - In between each iteration of the loop, add a sleep 2
+ID=$(pgrep -f "7-highlander")
+if [ -n "$ID" ];
+then
+    pkill -f "7-highlander"
+fi
