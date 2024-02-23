@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Descirption Of Process :
+# ---------------------------------------------
+# - displays To infinity and beyond indefinitely.
+# - In between each iteration of the loop, add a sleep 2
+
+
+file="/var/run/myscript.pid"
+echo "$$" > $file
+
+clean() {
+    rm -rf $file
+    exit
+}
+
+trap "echo I hate the kill command; clean" SIGTERM
+trap "echo Y U no love me?!" SIGINT
+
+while :
+do
+    echo "To infinity and beyond"
+    sleep 1
+done
