@@ -15,9 +15,9 @@ clean() {
 
 trap "echo I hate the kill command; clean" SIGTERM
 trap "echo Y U no love me?!" SIGINT
+trap "clean" SIGQUIT
 
 while :
 do
     echo "To infinity and beyond"
-    sleep 1
 done
