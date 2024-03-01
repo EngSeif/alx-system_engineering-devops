@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"search.sortOrder": "default",
+		"explorer.sortOrder": "type",
+		"files.associations": {
+			"array": "c",
+			"deque": "c",
+			"vector": "c",
+			"string_view": "c",
+			"algorithm": "c",
+			"initializer_list": "c",
+			"utility": "c"
+		}
+	}
+}
