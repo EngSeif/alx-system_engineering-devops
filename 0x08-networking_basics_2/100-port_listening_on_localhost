@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# configures an Ubuntu server with the below requirements.
-nc -l localhost 98
