@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Fix my server with these magic 2 lines
+echo "Hello Holberton" >/var/www/html/index.html
+service apache2 restart
