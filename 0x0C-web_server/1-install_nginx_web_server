@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#a Bash script that transfers a file from our client to a server
+sudo apt update
+sudo apt -y install nginx
+sudo mkdir -p /var/www/html
+echo "Hello World!" | sudo tee /var/www/html/index.html
+sudo chown -R www-data:www-data /var/www/html
+sudo chmod -R 755 /var/www/html
+echo "server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index index.html;
+
+    server_name _;
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}" | sudo tee /etc/nginx/sites-available/default
+sudo nginx -s reload
