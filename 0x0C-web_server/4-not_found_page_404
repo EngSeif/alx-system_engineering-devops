@@ -1,31 +1,43 @@
 #!/usr/bin/env bash
-#a Bash script that Configure your Nginx server so that /redirect_me is redirecting to another page.
-sudo apt update
-sudo apt install nginx -y
-sudo mkdir -p /var/www/html
-sudo mkdir -p /var/www/html/errors
-echo "Hello World!" | sudo tee /var/www/html/index.html
-echo "Ceci n'est pas une page" | sudo tee /var/www/html/errors/404.html
-sudo chown -R www-data:www-data /var/www/html
-sudo chmod -R 755 /var/www/html
-sudo bash -c 'cat > /etc/nginx/sites-available/default <<EOF
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
+#install nginx
 
-    root /var/www/html;
-    index index.html index.htm;
+# Variables
+BACKUP_FILE="/var/www/html/index.nginx-debian.html.bckp"
+INDEX_FILE="/var/www/html/index.nginx-debian.html"
+LOG_FILE="/var/log/nginx_install.log"
 
-    server_name _;
+# Update package index and install Nginx
+sudo apt-get update -y 2>&1 | sudo tee -a $LOG_FILE >/dev/null &&
+    sudo apt-get install nginx -y 2>&1 | sudo tee -a $LOG_FILE >/dev/null &&
 
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
+    # Start Nginx service
+    sudo service nginx start 2>&1 | sudo tee -a $LOG_FILE >/dev/null &&
 
-    error_page 404 /errors/404.html;
-    location = /errors/404.html {
-        internal;
-    }
-}
-EOF'
-sudo nginx -s reload
+    # Allow HTTP traffic through firewall
+    sudo ufw allow 'Nginx HTTP' 2>&1 | sudo tee -a $LOG_FILE >/dev/null &&
+
+    # Change ownership and permissions for web root directory
+    sudo chown -R "$USER":"$USER" /var/www/html &&
+    sudo chmod -R 755 /var/www/html &&
+
+    # Backup the default Nginx index file and replace with "Hello World!"
+    cp $INDEX_FILE $BACKUP_FILE &&
+    echo "Hello World!" | sudo tee $INDEX_FILE >/dev/null &&
+
+    # Setting up /redirect_me to a youtube video
+    sudo sed -i '24i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+
+# Set up a 404 page
+echo "Ceci n'est pas une page" >>/var/www/html/error_404.html
+sudo sed -i '25i\	error_page 404 /error_404.html;' /etc/nginx/sites-available/default
+
+# Restart Nginx
+if pgrep -x "nginx" >/dev/null; then
+    echo "Nginx is running. Restarting..."
+    sudo service nginx restart 2>&1 | sudo tee -a $LOG_FILE >/dev/null
+else
+    echo "Nginx is not running. Starting..."
+    sudo service nginx start 2>&1 | sudo tee -a $LOG_FILE >/dev/null
+fi
+
+echo "Nginx installed and configured. Log file: $LOG_FILE"
