@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Debug Fix - Nginx is Not Runnig
+# change nginx server to listen on port 80 and restart
 
 sed -i "s/8080/80/g" /etc/nginx/sites-enabled/default
-sudo service nginx restart
+service nginx restart
