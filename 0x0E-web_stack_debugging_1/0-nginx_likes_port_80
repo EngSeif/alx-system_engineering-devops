@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # Debug Fix - Nginx is Not Runnig
-sudo apt update -y
-sudo apt install nginx -y
+
 sed -i "s/8080/80/g" /etc/nginx/sites-enabled/default
-sudo service nginx start
+sudo service nginx restart
