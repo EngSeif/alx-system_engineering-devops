@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Get info about the URL
+get_url_data() {
+    full_domain="$1.$2"
+    result=$(dig "$full_domain" | awk '/^;; ANSWER SECTION:$/ {getline; print}')
+    subdomain=$(echo "$result" | awk '{print $1}' | cut -d '.' -f1)
+    record=$(echo "$result" | awk '{print $4}')
+    destination=$(echo "$result" | awk '{print $5}')
+    echo "The subdomain $subdomain is a $record record and points to $destination"
+}
+
+if [ "$#" -lt 1 ]; then
+    exit 1
+fi
+
+if [ "$#" -eq 2 ]; then
+    get_url_data "$2" "$1"
+    exit 0
+fi
+
+if [ "$#" -eq 1 ]; then
+    get_url_data "www" "$1"
+    get_url_data "lb-01" "$1"
+    get_url_data "web-01" "$1"
+    get_url_data "web-02" "$1"
+    exit 0
+fi
+
+exit 1
