@@ -6,4 +6,4 @@ if ! [ -x "$(command -v nginx)" ]; then
 fi
 sudo sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
 sudo service nginx restart
-curl -I 0:80 | grep "HTTP/1.1 200 OK" &>/dev/null
+curl 0:80
