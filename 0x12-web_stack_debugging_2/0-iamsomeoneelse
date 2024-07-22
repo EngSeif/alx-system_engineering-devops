@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Run as privillaged user
+
+if [[ "$#" -ne 1 ]]; then
+    exit 1
+fi
+
+sudo -u "$1" whoami
