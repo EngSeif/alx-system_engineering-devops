@@ -27,4 +27,4 @@ if __name__ == "__main__":
     for item in content_todo:
         if item.get('completed'):
             task_name = item.get('title')
-            print(f"\t{task_name}")
+            print(f"\t {task_name}")
