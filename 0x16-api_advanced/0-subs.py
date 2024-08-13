@@ -14,5 +14,6 @@ def number_of_subscribers(subreddit):
     url = f"https://api.reddit.com/r/{subreddit}/about/"
     r = requests.get(url, allow_redirects=False)
     if r.status_code == 200:
-        return r.json().get("data").get("subscribers")
+        data =  r.json().get("data", {})
+        return data.get("subscribers", 0)
     return 0
