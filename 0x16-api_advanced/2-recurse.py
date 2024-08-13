@@ -16,7 +16,7 @@ def recurse(subreddit, hot_list=[], after=None):
     of all hot articles
     """
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
-    headers = {'User-Agent': 'request'}
+    headers = {'User-Agent': 'myRedditApp/1.0'}
     params = {'limit': 100}
     if after:
         params['after'] = after
