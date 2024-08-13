@@ -13,7 +13,7 @@ def top_ten(subreddit):
     and prints the titles of the first 10 hot posts
     listed for a given subreddit.
     """
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
+    url = f"https://api.reddit.com/r/{subreddit}/hot"
     headers = {'User-Agent': 'myRedditApp/1.0'}
     params = {'limit': 10}
     r = requests.get(url,

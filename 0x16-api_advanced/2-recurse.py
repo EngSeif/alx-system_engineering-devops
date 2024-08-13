@@ -15,7 +15,7 @@ def recurse(subreddit, hot_list=[], after=None):
     API and returns a list containing the titles
     of all hot articles
     """
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
+    url = f"https://api.reddit.com/r/{subreddit}/hot"
     headers = {'User-Agent': 'myRedditApp/1.0'}
     params = {'limit': 100}
     if after:
