@@ -24,4 +24,4 @@ def top_ten(subreddit):
         data = r.json().get("data", {}).get("children")
         for d in data:
             print(d.get('data').get('title'))
-    return None
+    print("None")
